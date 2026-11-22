@@ -33,10 +33,17 @@ a una suma de control; no obre mai un sobre equivocat.
 
 El repartiment es genera fora d'aquesta pàgina i compleix:
 
+- Un sol regal fet i un sol regal rebut per persona.
 - Ningú es regala a ell mateix.
-- Cada sènior rep el regal d'un infant.
 - Cap intercanvi directe: si A regala a B, B no regala a A.
-- Un sol regal rebut i un sol regal fet per persona.
+- Cada sènior rep el regal d'un menor.
+- Restriccions de destinatari per a persones concretes, quan convé facilitar-los
+  la compra.
+- Barreja obligatòria entre branques familiars: ningú regala a algú de la seva
+  mateixa branca.
+
+El repartiment es tria a l'atzar, de manera uniforme, entre **totes** les
+assignacions que compleixen les regles alhora, no pel primer intent que encaixa.
 
 ## Abast real de la protecció
 
