@@ -177,11 +177,14 @@ function show(which){
   elAsk.hidden    = which !== "ask";
 }
 
+var hasPayload = false;
+
 function load(code){
   var d = decodeCode(code);
   if (!d) return false;
   document.getElementById("greet").textContent = "Hola, " + d.own + "!";
   document.getElementById("recv").textContent = d.recv;
+  hasPayload = true;
   return true;
 }
 
@@ -211,12 +214,28 @@ document.getElementById("codeForm").addEventListener("submit", function(e){
   }
 });
 
-(function init(){
+// Torna a llegir el fragment i deixa sempre el sobre TANCAT.
+// Cal cridar-ho també en canviar el hash: tocar un altre enllaç de la mateixa
+// pàgina no la recarrega, i sense això un segon germà veuria el sobre del primer.
+function init(){
+  hasPayload = false;
   var h = (location.hash || "").replace(/^#/, "");
   var ok = false;
   if (h){ try { ok = load(decodeURIComponent(h)); } catch(e){ ok = load(h); } }
+  elErr.hidden = true;
+  if (!ok) document.getElementById("code").value = "";
   show(ok ? "closed" : "ask");
-})();
+}
+
+window.addEventListener("hashchange", init);
+// Tornar enrere pot restaurar la pàgina des de la memòria cau amb el sobre obert.
+window.addEventListener("pageshow", function(e){ if (e.persisted) init(); });
+// Si es bloqueja el dispositiu o es canvia d'aplicació, el sobre es torna a tancar.
+document.addEventListener("visibilitychange", function(){
+  if (document.hidden && hasPayload && !elOpen.hidden) show("closed");
+});
+
+init();
 </script>
 </body>
 </html>
