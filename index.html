@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>El teu sobre · Amic invisible</title>
+<meta name="description" content="Obre el teu sobre de l'amic invisible. Només tu pots veure'l.">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:title" content="El teu sobre · Amic invisible">
+<meta property="og:description" content="Obre'l quan estiguis sol. A dins hi ha a qui has de fer un regal.">
+<meta name="theme-color" content="#a4322c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23a4322c'/%3E%3Cpath d='M6 10h20v14H6z' fill='none' stroke='%23fff' stroke-width='2'/%3E%3Cpath d='M6 10l10 8 10-8' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: un sol sobre segellat centrat sobre fons d'avet; en obrir-lo, el nom ocupa la pantalla. */
+:root{
+  --bg:#edf0ec; --paper:#fbfaf7; --ink:#1a2a23; --soft:#55675d;
+  --wax:#a4322c; --brass:#8f7138; --line:#d4dcd4; --shadow:rgba(26,42,35,.12);
+  --fd:"Fraunces",Georgia,"Times New Roman",serif;
+  --fb:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --fm:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0d1613; --paper:#17231e; --ink:#edf2ea; --soft:#9fb0a5;
+  --wax:#e2706a; --brass:#cfa358; --line:#2a3a33; --shadow:rgba(0,0,0,.45);
+  color-scheme:dark;
+}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--fb); font-size:16px; line-height:1.55;
+  -webkit-text-size-adjust:100%;
+  display:flex; align-items:center; justify-content:center;
+  padding-block:calc(32px + env(safe-area-inset-top,0px)) calc(32px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.wrap{width:100%; max-width:440px}
+.eyebrow{font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--brass); font-weight:600; text-align:center; margin:0 0 18px}
+.card{
+  background:var(--paper); border:1px solid var(--line); border-radius:4px;
+  padding:34px 24px 30px; text-align:center;
+  box-shadow:0 1px 2px var(--shadow),0 12px 32px -18px var(--shadow);
+}
+.seal{width:84px; height:84px; margin:0 auto 20px; display:block}
+h1{font-family:var(--fd); font-weight:600; font-size:clamp(22px,6vw,27px); line-height:1.2; margin:0 0 8px; text-wrap:balance}
+.lead{margin:0 auto; color:var(--soft); font-size:14.5px; max-width:30ch}
+.btn{
+  font-family:var(--fb); font-size:16px; font-weight:600; cursor:pointer;
+  width:100%; padding:16px 18px; margin-top:26px; border-radius:3px;
+  background:var(--wax); color:#fff; border:1px solid var(--wax);
+  transition:transform .12s ease, filter .12s ease; -webkit-appearance:none;
+}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:2px solid var(--brass); outline-offset:3px}
+.btn.ghost{background:none; color:var(--soft); border-color:var(--line); font-weight:500; font-size:14px; padding:12px; margin-top:16px}
+.rule{height:1px; background:var(--line); margin:26px 0 22px; border:0}
+.given-label{font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--soft); font-weight:600; margin:0 0 14px}
+.name{
+  font-family:var(--fd); font-weight:700; font-size:clamp(34px,11vw,52px);
+  line-height:1.08; margin:0; color:var(--wax); overflow-wrap:anywhere; text-wrap:balance;
+}
+.hush{margin:22px auto 0; font-size:13.5px; color:var(--soft); max-width:32ch; padding-top:18px; border-top:1px solid var(--line)}
+label{display:block; font-size:13px; font-weight:600; margin-bottom:8px; text-align:left}
+input[type=text]{
+  width:100%; font-family:var(--fm); font-size:19px; font-weight:500;
+  letter-spacing:.06em; text-align:center; text-transform:uppercase;
+  padding:15px 12px; border:1px solid var(--line); border-radius:3px;
+  background:var(--bg); color:var(--ink); -webkit-appearance:none;
+}
+input[type=text]:focus-visible{outline:2px solid var(--brass); outline-offset:1px; border-color:var(--brass)}
+.err{color:var(--wax); font-size:13.5px; margin:14px 0 0; font-weight:500}
+.reveal-anim{animation:lift .5s cubic-bezier(.2,.7,.3,1) both}
+@keyframes lift{from{opacity:0; transform:translateY(10px) scale(.97)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion:reduce){.reveal-anim{animation:none} .btn{transition:none}}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <p class="eyebrow">Amic invisible &middot; Nadal 2026</p>
+
+  <section class="card" id="closed" hidden>
+    <svg class="seal" viewBox="0 0 84 84" aria-hidden="true">
+      <rect x="6" y="18" width="72" height="48" rx="2" fill="none" stroke="var(--line)" stroke-width="2"/>
+      <path d="M6 20 42 47 78 20" fill="none" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="42" cy="48" r="14" fill="var(--wax)"/>
+      <circle cx="42" cy="48" r="10.5" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1"/>
+      <text x="42" y="53.5" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+    </svg>
+    <h1 id="greet">Hola!</h1>
+    <p class="lead">Aquest sobre és només per a tu. Quan estiguis sol, obre'l.</p>
+    <button class="btn" id="openBtn" type="button">Obrir el meu sobre</button>
+  </section>
+
+  <section class="card" id="open" hidden>
+    <p class="given-label">Has de fer un regal a</p>
+    <p class="name" id="recv"></p>
+    <p class="hush">Que no se n'assabenti ningú. Si l'oblides, torna a obrir aquest mateix enllaç.</p>
+    <button class="btn ghost" id="closeBtn" type="button">Tancar el sobre</button>
+  </section>
+
+  <section class="card" id="ask" hidden>
+    <svg class="seal" viewBox="0 0 84 84" aria-hidden="true">
+      <rect x="6" y="18" width="72" height="48" rx="2" fill="none" stroke="var(--line)" stroke-width="2"/>
+      <path d="M6 20 42 47 78 20" fill="none" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="42" cy="48" r="14" fill="none" stroke="var(--brass)" stroke-width="2" stroke-dasharray="3 3"/>
+    </svg>
+    <h1>El teu codi</h1>
+    <p class="lead">Escriu el codi que t'han enviat. No cal respectar majúscules ni guions.</p>
+    <hr class="rule">
+    <form id="codeForm">
+      <label for="code">Codi del sobre</label>
+      <input type="text" id="code" inputmode="latin" autocomplete="off" spellcheck="false"
+             autocapitalize="characters" placeholder="XXXX-XXXX-XXXX-XXXX">
+      <button class="btn" type="submit">Obrir el sobre</button>
+    </form>
+    <p class="err" id="err" hidden>Aquest codi no és vàlid. Repassa'l o demana'l de nou a qui ha fet el sorteig.</p>
+  </section>
+</div>
+
+<script>
+var ALPHA = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+var KEY = "amic-invisible-nadal-2026";
+
+function keystream(len){
+  var h = 2166136261, i;
+  for (i = 0; i < KEY.length; i++){ h ^= KEY.charCodeAt(i); h = Math.imul(h, 16777619); }
+  var out = new Uint8Array(len), s = h >>> 0;
+  if (s === 0) s = 0x9e3779b9;
+  for (i = 0; i < len; i++){
+    s ^= s << 13; s >>>= 0;
+    s ^= s >>> 17;
+    s ^= s << 5; s >>>= 0;
+    out[i] = (s ^ (i * 101)) & 255;
+  }
+  return out;
+}
+
+function decodeCode(code){
+  if (!code) return null;
+  var s = String(code).toUpperCase().replace(/O/g,"0").replace(/[IL]/g,"1").replace(/U/g,"V");
+  s = s.split("").filter(function(c){ return ALPHA.indexOf(c) >= 0; }).join("");
+  if (s.length < 5) return null;
+  var bits = 0, acc = 0, bytes = [], i;
+  for (i = 0; i < s.length; i++){
+    acc = (acc << 5) | ALPHA.indexOf(s[i]); bits += 5;
+    if (bits >= 8){ bytes.push((acc >>> (bits - 8)) & 255); bits -= 8; }
+  }
+  var enc = new Uint8Array(bytes), ks = keystream(enc.length);
+  var body = enc.map(function(b, j){ return b ^ ks[j]; });
+  var want = body[0], raw = body.slice(1), sum = 0;
+  for (i = 0; i < raw.length; i++) sum = (sum + raw[i]) % 255;
+  if (sum !== want) return null;
+  var txt;
+  try { txt = new TextDecoder("utf-8", {fatal:true}).decode(raw); } catch(e){ return null; }
+  var p = txt.indexOf("|");
+  if (p < 1 || p === txt.length - 1) return null;
+  return { own: txt.slice(0, p), recv: txt.slice(p + 1) };
+}
+
+var elClosed = document.getElementById("closed"),
+    elOpen   = document.getElementById("open"),
+    elAsk    = document.getElementById("ask"),
+    elErr    = document.getElementById("err");
+
+function show(which){
+  elClosed.hidden = which !== "closed";
+  elOpen.hidden   = which !== "open";
+  elAsk.hidden    = which !== "ask";
+}
+
+function load(code){
+  var d = decodeCode(code);
+  if (!d) return false;
+  document.getElementById("greet").textContent = "Hola, " + d.own + "!";
+  document.getElementById("recv").textContent = d.recv;
+  return true;
+}
+
+document.getElementById("openBtn").addEventListener("click", function(){
+  show("open");
+  elOpen.classList.remove("reveal-anim");
+  void elOpen.offsetWidth;
+  elOpen.classList.add("reveal-anim");
+  document.getElementById("closeBtn").focus();
+});
+
+document.getElementById("closeBtn").addEventListener("click", function(){
+  show("closed");
+  document.getElementById("openBtn").focus();
+});
+
+document.getElementById("codeForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  var v = document.getElementById("code").value;
+  if (load(v)){
+    elErr.hidden = true;
+    try { history.replaceState(null, "", "#" + v.toUpperCase().replace(/[^0-9A-Za-z-]/g,"")); } catch(err){}
+    show("closed");
+    document.getElementById("openBtn").focus();
+  } else {
+    elErr.hidden = false;
+  }
+});
+
+(function init(){
+  var h = (location.hash || "").replace(/^#/, "");
+  var ok = false;
+  if (h){ try { ok = load(decodeURIComponent(h)); } catch(e){ ok = load(h); } }
+  show(ok ? "closed" : "ask");
+})();
+</script>
+</body>
+</html>
